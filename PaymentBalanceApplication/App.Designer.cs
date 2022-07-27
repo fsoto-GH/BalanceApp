@@ -187,7 +187,7 @@
             this.Controls.Add(this.panel1);
             this.MinimumSize = new System.Drawing.Size(415, 39);
             this.Name = "App";
-            this.Text = "Balance-Payment App";
+            this.Text = "Balance App";
             this.gpOptions.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
