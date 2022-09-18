@@ -54,62 +54,71 @@
             this.gpOptions.Controls.Add(this.btnAddBalance);
             this.gpOptions.Location = new System.Drawing.Point(12, 12);
             this.gpOptions.Name = "gpOptions";
-            this.gpOptions.Size = new System.Drawing.Size(372, 106);
+            this.gpOptions.Size = new System.Drawing.Size(377, 106);
             this.gpOptions.TabIndex = 1;
             this.gpOptions.TabStop = false;
             this.gpOptions.Text = "Transaction Options";
             // 
             // btnEdit
             // 
+            this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEdit.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnEdit.Enabled = false;
             this.btnEdit.Location = new System.Drawing.Point(186, 61);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(173, 23);
-            this.btnEdit.TabIndex = 3;
+            this.btnEdit.TabIndex = 4;
             this.btnEdit.Text = "Edit";
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnClear
             // 
+            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnClear.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnClear.Enabled = false;
             this.btnClear.Location = new System.Drawing.Point(6, 61);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(173, 23);
-            this.btnClear.TabIndex = 1;
+            this.btnClear.TabIndex = 3;
             this.btnClear.Text = "Clear All";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnAddCashback
             // 
+            this.btnAddCashback.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddCashback.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnAddCashback.Location = new System.Drawing.Point(256, 19);
             this.btnAddCashback.Name = "btnAddCashback";
             this.btnAddCashback.Size = new System.Drawing.Size(103, 23);
             this.btnAddCashback.TabIndex = 2;
             this.btnAddCashback.Text = "Add a Cashback";
             this.btnAddCashback.UseVisualStyleBackColor = true;
-            this.btnAddCashback.Click += new System.EventHandler(this.btnAddCashback_Click);
+            this.btnAddCashback.Click += new System.EventHandler(this.btnAddNamedAmount_Click);
             // 
             // btnAddPayment
             // 
+            this.btnAddPayment.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnAddPayment.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnAddPayment.Location = new System.Drawing.Point(131, 19);
             this.btnAddPayment.Name = "btnAddPayment";
             this.btnAddPayment.Size = new System.Drawing.Size(103, 23);
             this.btnAddPayment.TabIndex = 1;
             this.btnAddPayment.Text = "Add a Payment";
             this.btnAddPayment.UseVisualStyleBackColor = true;
-            this.btnAddPayment.Click += new System.EventHandler(this.btnAddPayment_Click);
+            this.btnAddPayment.Click += new System.EventHandler(this.btnAddNamedAmount_Click);
             // 
             // btnAddBalance
             // 
+            this.btnAddBalance.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnAddBalance.Location = new System.Drawing.Point(6, 19);
             this.btnAddBalance.Name = "btnAddBalance";
             this.btnAddBalance.Size = new System.Drawing.Size(103, 23);
             this.btnAddBalance.TabIndex = 0;
             this.btnAddBalance.Text = "Add a Balance";
             this.btnAddBalance.UseVisualStyleBackColor = true;
-            this.btnAddBalance.Click += new System.EventHandler(this.btnAddBalance_Click);
+            this.btnAddBalance.Click += new System.EventHandler(this.btnAddNamedAmount_Click);
             // 
             // panel1
             // 
@@ -117,7 +126,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(399, 124);
+            this.panel1.Size = new System.Drawing.Size(404, 124);
             this.panel1.TabIndex = 2;
             // 
             // txtSummary
@@ -130,8 +139,9 @@
             this.txtSummary.Name = "txtSummary";
             this.txtSummary.ReadOnly = true;
             this.txtSummary.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtSummary.Size = new System.Drawing.Size(399, 591);
+            this.txtSummary.Size = new System.Drawing.Size(404, 587);
             this.txtSummary.TabIndex = 3;
+            this.txtSummary.TabStop = false;
             // 
             // panel2
             // 
@@ -140,9 +150,9 @@
             this.panel2.Controls.Add(this.btnExport);
             this.panel2.Controls.Add(this.btnPrintTxt);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 667);
+            this.panel2.Location = new System.Drawing.Point(0, 663);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(399, 48);
+            this.panel2.Size = new System.Drawing.Size(404, 48);
             this.panel2.TabIndex = 4;
             // 
             // btnImport
@@ -150,7 +160,7 @@
             this.btnImport.Location = new System.Drawing.Point(98, 12);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(81, 23);
-            this.btnImport.TabIndex = 2;
+            this.btnImport.TabIndex = 6;
             this.btnImport.Text = "Import";
             this.btnImport.UseVisualStyleBackColor = true;
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
@@ -161,7 +171,7 @@
             this.btnExport.Location = new System.Drawing.Point(11, 12);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(81, 23);
-            this.btnExport.TabIndex = 1;
+            this.btnExport.TabIndex = 5;
             this.btnExport.Text = "Export";
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
@@ -169,10 +179,10 @@
             // btnPrintTxt
             // 
             this.btnPrintTxt.Enabled = false;
-            this.btnPrintTxt.Location = new System.Drawing.Point(267, 12);
+            this.btnPrintTxt.Location = new System.Drawing.Point(285, 12);
             this.btnPrintTxt.Name = "btnPrintTxt";
             this.btnPrintTxt.Size = new System.Drawing.Size(103, 23);
-            this.btnPrintTxt.TabIndex = 0;
+            this.btnPrintTxt.TabIndex = 7;
             this.btnPrintTxt.Text = "Save Text";
             this.btnPrintTxt.UseVisualStyleBackColor = true;
             this.btnPrintTxt.Click += new System.EventHandler(this.btnPrintTxt_Click);
@@ -181,11 +191,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(399, 715);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(404, 711);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.txtSummary);
             this.Controls.Add(this.panel1);
-            this.MinimumSize = new System.Drawing.Size(415, 39);
+            this.MinimumSize = new System.Drawing.Size(420, 750);
             this.Name = "App";
             this.Text = "Balance App";
             this.gpOptions.ResumeLayout(false);

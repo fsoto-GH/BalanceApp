@@ -1,33 +1,33 @@
-﻿namespace PaymentBalanceApplication
+﻿namespace PaymentBalanceApplication;
+
+partial class AddEditNamedAmount
 {
-    partial class AddEditNamedAmount
+    /// <summary>
+    /// Required designer variable.
+    /// </summary>
+    private System.ComponentModel.IContainer components = null;
+
+    /// <summary>
+    /// Clean up any resources being used.
+    /// </summary>
+    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+    protected override void Dispose(bool disposing)
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+        if (disposing && (components != null))
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
+            components.Dispose();
         }
+        base.Dispose(disposing);
+    }
 
-        #region Windows Form Designer generated code
+    #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+    /// <summary>
+    /// Required method for Designer support - do not modify
+    /// the contents of this method with the code editor.
+    /// </summary>
+    private void InitializeComponent()
+    {
             this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -61,24 +61,29 @@
             // 
             // txtName
             // 
+            this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.Location = new System.Drawing.Point(69, 12);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(207, 20);
+            this.txtName.Size = new System.Drawing.Size(209, 20);
             this.txtName.TabIndex = 2;
             this.txtName.Validating += new System.ComponentModel.CancelEventHandler(this.txtName_Validating);
             // 
             // txtAmount
             // 
+            this.txtAmount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAmount.Location = new System.Drawing.Point(69, 53);
             this.txtAmount.Name = "txtAmount";
-            this.txtAmount.Size = new System.Drawing.Size(207, 20);
+            this.txtAmount.Size = new System.Drawing.Size(209, 20);
             this.txtAmount.TabIndex = 3;
             this.txtAmount.Validating += new System.ComponentModel.CancelEventHandler(this.txtAmount_Validating);
             // 
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCancel.Location = new System.Drawing.Point(12, 143);
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(12, 146);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(118, 23);
             this.btnCancel.TabIndex = 4;
@@ -89,7 +94,7 @@
             // btnAdd
             // 
             this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAdd.Location = new System.Drawing.Point(158, 143);
+            this.btnAdd.Location = new System.Drawing.Point(160, 146);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(118, 23);
             this.btnAdd.TabIndex = 5;
@@ -112,6 +117,8 @@
             // 
             // cbCategory
             // 
+            this.cbCategory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCategory.FormattingEnabled = true;
             this.cbCategory.Items.AddRange(new object[] {
@@ -120,7 +127,7 @@
             "Cashbacks"});
             this.cbCategory.Location = new System.Drawing.Point(69, 97);
             this.cbCategory.Name = "cbCategory";
-            this.cbCategory.Size = new System.Drawing.Size(207, 21);
+            this.cbCategory.Size = new System.Drawing.Size(209, 21);
             this.cbCategory.TabIndex = 7;
             // 
             // AddEditNamedAmount
@@ -129,7 +136,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
-            this.ClientSize = new System.Drawing.Size(292, 178);
+            this.CancelButton = this.btnCancel;
+            this.ClientSize = new System.Drawing.Size(294, 181);
             this.Controls.Add(this.cbCategory);
             this.Controls.Add(this.lblCategory);
             this.Controls.Add(this.btnAdd);
@@ -138,26 +146,24 @@
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.MaximumSize = new System.Drawing.Size(308, 217);
-            this.MinimumSize = new System.Drawing.Size(308, 161);
+            this.MinimumSize = new System.Drawing.Size(310, 160);
             this.Name = "AddEditNamedAmount";
             this.Text = "Add Payment";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
-        }
-
-        #endregion
-
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.TextBox txtAmount;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.ErrorProvider errorProvider;
-        private System.Windows.Forms.Label lblCategory;
-        private System.Windows.Forms.ComboBox cbCategory;
     }
+
+    #endregion
+
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.TextBox txtName;
+    private System.Windows.Forms.TextBox txtAmount;
+    private System.Windows.Forms.Button btnCancel;
+    private System.Windows.Forms.Button btnAdd;
+    private System.Windows.Forms.ErrorProvider errorProvider;
+    private System.Windows.Forms.Label lblCategory;
+    private System.Windows.Forms.ComboBox cbCategory;
 }

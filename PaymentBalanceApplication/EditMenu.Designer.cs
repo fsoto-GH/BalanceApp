@@ -41,39 +41,43 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.cbCategory);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(244, 57);
+            this.groupBox1.Size = new System.Drawing.Size(388, 57);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Category";
             // 
             // cbCategory
             // 
+            this.cbCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCategory.FormattingEnabled = true;
             this.cbCategory.Location = new System.Drawing.Point(6, 19);
             this.cbCategory.Name = "cbCategory";
-            this.cbCategory.Size = new System.Drawing.Size(229, 21);
+            this.cbCategory.Size = new System.Drawing.Size(373, 21);
             this.cbCategory.TabIndex = 1;
             this.cbCategory.SelectedIndexChanged += new System.EventHandler(this.cbCategory_SelectedIndexChanged);
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.btnDelete);
-            this.groupBox2.Controls.Add(this.btnEdit);
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.cbSelect);
             this.groupBox2.Location = new System.Drawing.Point(12, 75);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(244, 96);
+            this.groupBox2.Size = new System.Drawing.Size(388, 57);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Select ";
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(6, 60);
+            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDelete.Location = new System.Drawing.Point(12, 151);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(99, 23);
             this.btnDelete.TabIndex = 2;
@@ -83,7 +87,8 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(136, 60);
+            this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEdit.Location = new System.Drawing.Point(196, 151);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(99, 23);
             this.btnEdit.TabIndex = 1;
@@ -93,16 +98,18 @@
             // 
             // cbSelect
             // 
+            this.cbSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cbSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSelect.FormattingEnabled = true;
-            this.cbSelect.Location = new System.Drawing.Point(7, 20);
+            this.cbSelect.Location = new System.Drawing.Point(6, 19);
             this.cbSelect.Name = "cbSelect";
-            this.cbSelect.Size = new System.Drawing.Size(228, 21);
+            this.cbSelect.Size = new System.Drawing.Size(372, 21);
             this.cbSelect.TabIndex = 0;
             // 
             // btnDone
             // 
-            this.btnDone.Location = new System.Drawing.Point(148, 177);
+            this.btnDone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDone.Location = new System.Drawing.Point(301, 151);
             this.btnDone.Name = "btnDone";
             this.btnDone.Size = new System.Drawing.Size(99, 23);
             this.btnDone.TabIndex = 4;
@@ -110,15 +117,19 @@
             this.btnDone.UseVisualStyleBackColor = true;
             this.btnDone.Click += new System.EventHandler(this.btnDone_Click);
             // 
-            // Edit
+            // EditMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(270, 212);
+            this.ClientSize = new System.Drawing.Size(414, 186);
+            this.Controls.Add(this.btnEdit);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnDone);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Name = "Edit";
+            this.MinimumSize = new System.Drawing.Size(430, 225);
+            this.Name = "EditMenu";
+            this.Text = "Edit Menu";
             this.Load += new System.EventHandler(this.Edit_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
