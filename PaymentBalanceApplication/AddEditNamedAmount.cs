@@ -25,14 +25,14 @@ internal partial class AddEditNamedAmount : Form
         AdjustCategoryDisplay(false);
     }
 
-    public AddEditNamedAmount(DatedAmount namedAmount, string category = "", string mode = "Add", bool showCategory = false)
+    public AddEditNamedAmount(DatedAmount namedAmount, string category = "", string btnAcceptText = "Add", bool showCategory = false)
     {
         InitializeComponent();
         NamedAmount = namedAmount;
-        txtAmount.Text = namedAmount.Amount.ToString();
+        txtAmount.Text = $"{namedAmount.Amount:0.00}";
         txtName.Text = namedAmount.AmountName;
         Text = $"Editing from {category}";
-        btnAdd.Text = mode;
+        btnAdd.Text = btnAcceptText;
         this.category = category;
         AdjustCategoryDisplay(showCategory);
     }
@@ -58,20 +58,23 @@ internal partial class AddEditNamedAmount : Form
     {
         if (ValidateChildren())
         {
-            this.DialogResult = DialogResult.OK;
             NamedAmount.Amount = Math.Round(double.Parse(txtAmount.Text), 2);
-            NamedAmount.Category = string.IsNullOrEmpty(cbCategory.Text) ? category : cbCategory.Text.TrimEnd('s');
-            NamedAmount.AmountName = txtName.Text;
+            NamedAmount.Category = string.IsNullOrWhiteSpace(cbCategory.Text) ? category : cbCategory.Text.TrimEnd('s');
+            NamedAmount.AmountName = txtName.Text.Trim();
+            
+            DialogResult = DialogResult.OK;
         }
     }
 
     private void btnCancel_Click(object sender, EventArgs e)
     {
-        this.Close();
+        DialogResult = DialogResult.Cancel;
+        Close();
     }
 
     private void txtAmount_Validating(object sender, CancelEventArgs e)
     {
+        errorProvider.SetError(txtAmount, string.Empty);
         double amount;
         if (!txtAmount.Text.Contains('.'))
         {
@@ -96,7 +99,8 @@ internal partial class AddEditNamedAmount : Form
 
     private void txtName_Validating(object sender, CancelEventArgs e)
     {
-        if (txtName.Text.Trim().Length == 0)
+        errorProvider.SetError(txtName, string.Empty);
+        if (string.IsNullOrWhiteSpace(txtName.Text))
         {
             e.Cancel = true;
             errorProvider.SetError(txtName, "Enter source name.");

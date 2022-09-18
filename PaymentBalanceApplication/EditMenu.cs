@@ -61,6 +61,7 @@ internal partial class EditMenu : Form
 
     private void btnDone_Click(object sender, EventArgs e)
     {
+        DialogResult = DialogResult.Cancel;
         Close();
     }
 
