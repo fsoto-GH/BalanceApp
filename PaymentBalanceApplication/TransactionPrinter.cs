@@ -75,7 +75,7 @@ internal static class TransactionPrinter
         var includedCategories = tracker.IncludedCategories;
 
         if (includedCategories.Any() == false)
-            return String.Empty;
+            return string.Empty;
         
         StringBuilder summary = new();
         int nameMinSize = includedCategories.Any()? includedCategories.Max(cat => $"Standing {cat}s".Length): 0;
