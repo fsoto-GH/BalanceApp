@@ -82,4 +82,11 @@ internal class TransactionTracker
             return 0;
         return _transactions.Max(x => $"{x.Amount:0.00}".Length);
     }
+
+    /// <summary>
+    /// This yields a set including only the categories which have at least on existing transaction.
+    /// Example: suppose categories A, B, and C exist, but there is only one transaction of type C.
+    /// Then this will return a set only containing C.
+    /// </summary>
+    public HashSet<string> IncludedCategories => _transactions.Select(x => x.Category).ToHashSet();
 }

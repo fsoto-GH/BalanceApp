@@ -72,9 +72,13 @@ internal static class TransactionPrinter
         if (tracker is null)
             return string.Empty;
 
-        int nameMinSize = tracker.Categories.Max(x => $"Standing {x}s".Length);
+        var includedCategories = tracker.IncludedCategories;
 
+        if (includedCategories.Any() == false)
+            return String.Empty;
+        
         StringBuilder summary = new();
+        int nameMinSize = includedCategories.Any()? includedCategories.Max(cat => $"Standing {cat}s".Length): 0;
         int nameSpacing = Math.Max(tracker.GetMaxNameLength(), nameMinSize);
         int amountSpacing = Math.Max(tracker.GetMaxAmountLength(), AMOUNT_MIN_SIZE);
 
