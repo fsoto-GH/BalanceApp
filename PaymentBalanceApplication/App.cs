@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Deployment.Application;
 
 namespace PaymentBalanceApplication;
 
@@ -17,6 +18,11 @@ internal partial class App : Form
     {
         InitializeComponent();
         tracker = new();
+
+        if (ApplicationDeployment.IsNetworkDeployed)
+        {
+            Text = $"Balance App [v. {ApplicationDeployment.CurrentDeployment.CurrentVersion}]";
+        }
     }
 
     private void ShowAddDatedAmountDialog(string category)
