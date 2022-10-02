@@ -110,19 +110,14 @@ internal partial class App : Form
 
     private void btnImport_Click(object sender, EventArgs e)
     {
+        bool doDelete = false;
         // ask user if they wish to delete any existing transactions
         if (tracker.HasTransactions)
         {
             DialogResult box = MessageBox.Show("There are existing transactions. Would you like to clear them?", "Clear Existing Transactions?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (box == DialogResult.Cancel) return;
 
-            if (box == DialogResult.Yes)
-            {
-                tracker.ClearTransactions();
-            }
-            else if (box == DialogResult.Cancel)
-            {
-                return;
-            }
+            doDelete = box == DialogResult.Yes;
         }
 
         OpenFileDialog open = new OpenFileDialog();
@@ -132,6 +127,10 @@ internal partial class App : Form
         int additions = 0;
         if (open.ShowDialog() == DialogResult.OK)
         {
+            if (doDelete)
+            {
+                tracker.ClearTransactions();
+            }
             string[] lines = File.ReadAllLines(open.FileName);
 
             foreach (string line in lines)
