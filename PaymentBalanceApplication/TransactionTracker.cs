@@ -2,12 +2,12 @@
 using System.ComponentModel;
 using System.Linq;
 
-namespace PaymentBalanceApplication;
+namespace PaymentTracker.App;
 
 /// <summary>
 /// Class to encapsulate transactions and a means for interacting with them.
 /// </summary>
-internal class TransactionTracker
+public class TransactionTracker
 {
     private readonly BindingList<DatedAmount> _transactions;
     private static readonly Dictionary<string, double> _catNetMult = new()
@@ -34,7 +34,7 @@ internal class TransactionTracker
     {
         if (!Categories.Contains(datedAmount.Category))
         {
-            throw new InvalidEnumArgumentException($"Dated amount with category {datedAmount.Category} is invalid.");
+            throw new KeyNotFoundException($"Dated amount with category {datedAmount.Category} is invalid.");
         }
         _transactions.Add(datedAmount);
     }

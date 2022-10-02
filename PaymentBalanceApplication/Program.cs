@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace PaymentBalanceApplication;
+namespace PaymentTracker.App;
 
 static class Program
 {

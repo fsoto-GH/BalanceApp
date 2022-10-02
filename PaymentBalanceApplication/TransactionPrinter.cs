@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace PaymentBalanceApplication;
+namespace PaymentTracker.App;
 
 /// <summary>
 /// Class used to display or save the transactions.

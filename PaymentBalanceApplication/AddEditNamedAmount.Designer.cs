@@ -1,4 +1,4 @@
-﻿namespace PaymentBalanceApplication;
+﻿namespace PaymentTracker.App;
 
 partial class AddEditNamedAmount
 {
