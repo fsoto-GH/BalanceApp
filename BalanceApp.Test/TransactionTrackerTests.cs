@@ -1,5 +1,5 @@
-using PaymentTracker.App;
-namespace PaymentTracker.Test
+using BalanceApp.App;
+namespace BalanceApp.Test
 {
     public class TransactionTrackerTests
     {

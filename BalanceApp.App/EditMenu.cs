@@ -3,7 +3,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace PaymentTracker.App;
+namespace BalanceApp.App;
 
 /// <summary>
 /// This form is used to narrow down on the transactions and choose one to edit or delete.

@@ -1,4 +1,4 @@
-﻿namespace PaymentTracker.App;
+﻿namespace BalanceApp.App;
 
 /// <summary>
 /// Simplest representation of a transaction.
