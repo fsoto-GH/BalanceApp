@@ -1,4 +1,4 @@
-﻿namespace PaymentTracker.App;
+﻿namespace BalanceApp.App;
 
 /// <summary>
 /// Simple class to couple a transaction type dropdown display name and internal name.

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 
-namespace PaymentTracker.App;
+namespace BalanceApp.App;
 
 /// <summary>
 /// Class to encapsulate transactions and a means for interacting with them.
