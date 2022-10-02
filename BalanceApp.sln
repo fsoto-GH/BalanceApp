@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30523.141
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment Tracker", "PaymentBalanceApplication\Payment Tracker.csproj", "{53D50DC7-D365-4C31-B772-D32DB508641D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentTracker.App", "PaymentBalanceApplication\PaymentTracker.App.csproj", "{53D50DC7-D365-4C31-B772-D32DB508641D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentTracker.Test", "PaymentTracker.Test\PaymentTracker.Test.csproj", "{B77BD148-771F-421A-8FE1-36A1114BFB4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{53D50DC7-D365-4C31-B772-D32DB508641D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53D50DC7-D365-4C31-B772-D32DB508641D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53D50DC7-D365-4C31-B772-D32DB508641D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B77BD148-771F-421A-8FE1-36A1114BFB4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B77BD148-771F-421A-8FE1-36A1114BFB4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B77BD148-771F-421A-8FE1-36A1114BFB4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B77BD148-771F-421A-8FE1-36A1114BFB4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
