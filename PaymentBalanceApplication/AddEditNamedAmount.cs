@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace PaymentBalanceApplication;
+namespace PaymentTracker.App;
 
 /// <summary>
 /// This form is used to add or edit a transaction.

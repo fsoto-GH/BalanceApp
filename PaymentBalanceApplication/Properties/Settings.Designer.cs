@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PaymentBalanceApplication.Properties
+namespace PaymentTracker.App.Properties
 {
 
 

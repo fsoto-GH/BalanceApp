@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Deployment.Application;
 
-namespace PaymentBalanceApplication;
+namespace PaymentTracker.App;
 
 /// <summary>
 /// Main entry point for the GUI.
