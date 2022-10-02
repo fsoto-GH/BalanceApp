@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PaymentBalanceApplication\PaymentTracker.App.csproj" />
+    <ProjectReference Include="..\BalanceApp.App\BalanceApp.csproj" />
   </ItemGroup>
 
 </Project>
