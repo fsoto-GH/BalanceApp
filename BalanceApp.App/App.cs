@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Deployment.Application;
+using System.Diagnostics;
 
 namespace BalanceApp.App;
 
@@ -139,8 +140,8 @@ internal partial class App : Form
             {
                 tracker.ClearTransactions();
             }
-            
-            foreach(string fileName in open.FileNames)
+
+            foreach (string fileName in open.FileNames)
             {
                 var res = loadFromFile(fileName);
                 additions += res.Additions;
@@ -168,17 +169,22 @@ internal partial class App : Form
         {
             string[] comps = line.Split(',');
 
-            if (comps.Length == 3)
+            if (comps.Length != 3)
             {
-                string cat = comps[0];
-                string name = comps[1];
-
-                if (double.TryParse(comps[2], out double amount) && tracker.Categories.Contains(cat))
-                {
-                    tracker.Add(new(name, amount, cat));
-                    additions++;
-                }
+                Debug.WriteLine($"Incorrect number of arguments in: '[File: '{fileName}']: '{line}'");
+                continue;
             }
+
+            string cat = comps[0];
+            string name = comps[1];
+
+            if (!(double.TryParse(comps[2], out double amount) && tracker.Categories.Contains(cat)))
+            {
+                Debug.WriteLine($"Unable to parse: '{line}'");
+            }
+
+            tracker.Add(new(name, amount, cat));
+            additions++;
         }
         return new FileImportResult
         {
