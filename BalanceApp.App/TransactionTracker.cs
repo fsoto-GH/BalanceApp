@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -10,14 +11,14 @@ namespace BalanceApp.App;
 public class TransactionTracker
 {
     private readonly BindingList<DatedAmount> _transactions;
-    private static readonly Dictionary<string, double> _catNetMult = new()
+    private static readonly Dictionary<string, double> NET_CATEGORY_MULTIPLIER = new()
     {
         {"Balance", 1 },
         {"Payment", -1 },
         {"Cashback", 0 },
     };
 
-    public string[] Categories { get; } = _catNetMult.Keys.ToArray();
+    public HashSet<string> Categories { get; } = NET_CATEGORY_MULTIPLIER.Keys.ToHashSet();
 
     public TransactionTracker()
     {
@@ -28,7 +29,7 @@ public class TransactionTracker
 
     public bool HasTransactions => _transactions?.Any() == true;
 
-    public double NetBalance => _transactions.Sum(x => x.Amount * _catNetMult[x.Category]);
+    public double NetBalance => _transactions.Sum(x => x.Amount * NET_CATEGORY_MULTIPLIER[x.Category]);
 
     public void Add(DatedAmount datedAmount)
     {
@@ -66,7 +67,7 @@ public class TransactionTracker
 
     public double SumOfType(string type)
     {
-        return _transactions.Where(x => string.Equals(x.Category, type)).Sum(x => x.Amount);
+        return _transactions.Where(x => string.Equals(x.Category, type))?.Sum(x => x.Amount) ?? 0;
     }
 
     public int GetMaxNameLength()
@@ -80,7 +81,21 @@ public class TransactionTracker
     {
         if (!_transactions.Any())
             return 0;
-        return _transactions.Max(x => $"{x.Amount:0.00}".Length);
+
+        // check individual category max chars
+        // should not require finding max length of individual items.
+        // Suppose TT is a non-empty TransactionTracker containing i categories.
+        // Let TT_ij represent the jth item in category i.
+        // Let TT_ij >= 0 for all j in TT_i
+        // Then let z = sum_of(TT_ij) for all j in TT_i.
+        // That means that z >= n_i >= 0 for all i in TT.
+        // Therefore len($"{z:N2}") >= len($"{n_i:N2}") for all i in TT.
+        var maxCategoryAmountLength = _transactions.GroupBy(x => x.Category)
+            .Select(x => x.Sum(y => y.Amount))
+            .Max(x => $"{x:N2}".Length);
+
+        var maxNetAmountLength = $"{NetBalance:N2}".Length;
+        return Math.Max(maxNetAmountLength, maxCategoryAmountLength);
     }
 
     /// <summary>

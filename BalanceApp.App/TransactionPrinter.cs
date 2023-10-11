@@ -37,10 +37,9 @@ internal static class TransactionPrinter
 
     private static string SectionTotal(string totalLabel, double amount, int amountSpacing, int nameSpacing)
     {
-        string _amount = string.Format("{0:0.00}", Math.Abs(amount));
         return string.Format(" {0}${1} [{2}]\r\n\r\n\r\n",
             amount < 0 ? "-" : " ",
-            _amount.PadLeft(amountSpacing),
+            $"{Math.Abs(amount):N2}".PadLeft(amountSpacing),
             totalLabel.PadRight(nameSpacing)
         );
     }
@@ -55,10 +54,9 @@ internal static class TransactionPrinter
         summary.Append(SectionHeader(category + "s", rowLength));
         for (int i = 0; i < catItems.Length; i++)
         {
-            string amount = string.Format("{0:0.00}", catItems[i].Amount);
             summary.Append(string.Format("{0} ${1} [{2}]\r\n",
                 i == catItems.Length - 1 && i > 0 ? "+" : " ",
-                amount.PadLeft(amountSpacing),
+                $"{catItems[i].Amount:N2}".PadLeft(amountSpacing),
                 catItems[i].AmountName.PadRight(nameSpacing))
             );
         }
@@ -82,7 +80,7 @@ internal static class TransactionPrinter
         int nameSpacing = Math.Max(tracker.GetMaxNameLength(), nameMinSize);
         int amountSpacing = Math.Max(tracker.GetMaxAmountLength(), AMOUNT_MIN_SIZE);
 
-        // "  ${amountSpacing} [{nameSpacing}]".Length = rowLength
+        // "  ${amountSpacing:,.2f} [{nameSpacing}]".Length = rowLength
         int rowLength = 6 + amountSpacing + nameSpacing;
 
         if (tracker?.HasTransactions == true)
