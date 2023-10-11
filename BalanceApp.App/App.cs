@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Deployment.Application;
+using System.Diagnostics;
 
 namespace BalanceApp.App;
 
@@ -86,10 +87,12 @@ internal partial class App : Form
 
     private void btnPrintTxt_Click(object sender, EventArgs e)
     {
-        SaveFileDialog save = new();
-        save.DefaultExt = ".txt";
-        save.FileName = string.Format("{0:00}-{1:00}-{2}", DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Year);
-        save.Filter = "txt|*.txt";
+        SaveFileDialog save = new()
+        {
+            DefaultExt = ".txt",
+            FileName = string.Format("{0:00}-{1:00}-{2}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day),
+            Filter = "txt|*.txt"
+        };
         if (save.ShowDialog() == DialogResult.OK)
         {
             TransactionPrinter.SaveToFile(tracker, save.FileName);
@@ -98,10 +101,12 @@ internal partial class App : Form
 
     private void btnExport_Click(object sender, EventArgs e)
     {
-        SaveFileDialog save = new();
-        save.DefaultExt = ".txt";
-        save.FileName = string.Format("E_{0:00}-{1:00}-{2}", DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Year);
-        save.Filter = "txt|*.txt";
+        SaveFileDialog save = new()
+        {
+            DefaultExt = ".txt",
+            FileName = string.Format("E_{0:00}-{1:00}-{2:00}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day),
+            Filter = "txt|*.txt"
+        };
         if (save.ShowDialog() == DialogResult.OK)
         {
             TransactionPrinter.ExportToFile(tracker, save.FileName);
@@ -120,45 +125,71 @@ internal partial class App : Form
             doDelete = box == DialogResult.Yes;
         }
 
-        OpenFileDialog open = new OpenFileDialog();
-        open.DefaultExt = ".txt";
-        open.Filter = "txt|*.txt";
+        OpenFileDialog open = new()
+        {
+            DefaultExt = ".txt",
+            Filter = "txt|*.txt",
+            Multiselect = true
+        };
 
         int additions = 0;
+        int totalLinesRead = 0;
         if (open.ShowDialog() == DialogResult.OK)
         {
             if (doDelete)
             {
                 tracker.ClearTransactions();
             }
-            string[] lines = File.ReadAllLines(open.FileName);
 
-            foreach (string line in lines)
+            foreach (string fileName in open.FileNames)
             {
-                string[] comps = line.Split(',');
-
-                if (comps.Length == 3)
-                {
-                    string cat = comps[0];
-                    string name = comps[1];
-
-                    if (double.TryParse(comps[2], out double amount) && tracker.Categories.Contains(cat))
-                    {
-                        additions++;
-                        tracker.Add(new(name, amount, cat));
-                    }
-                }
+                var res = loadFromFile(fileName);
+                additions += res.Additions;
+                totalLinesRead += res.TotalLines;
             }
             UpdateSummary();
 
             if (additions > 0)
             {
-                MessageBox.Show(string.Format("Successfully added {0}/{1} item(s)!", additions, lines.Length), "Success");
+                MessageBox.Show(string.Format("Successfully added {0}/{1} item(s)!", additions, totalLinesRead), "Success");
             }
             else
             {
                 MessageBox.Show("No additions made. Check if the file was empty or malformed.\nEach line should follow: \"[Balance|Payment|Cashback],Name,Amount\"");
             }
         }
+    }
+
+    private FileImportResult loadFromFile(string fileName)
+    {
+        int additions = 0;
+        string[] lines = File.ReadAllLines(fileName);
+
+        foreach (string line in lines)
+        {
+            string[] comps = line.Split(',');
+
+            if (comps.Length != 3)
+            {
+                Debug.WriteLine($"Incorrect number of arguments in: '[File: '{fileName}']: '{line}'");
+                continue;
+            }
+
+            string cat = comps[0];
+            string name = comps[1];
+
+            if (!(double.TryParse(comps[2], out double amount) && tracker.Categories.Contains(cat)))
+            {
+                Debug.WriteLine($"Unable to parse: '{line}'");
+            }
+
+            tracker.Add(new(name, amount, cat));
+            additions++;
+        }
+        return new FileImportResult
+        {
+            Additions = additions,
+            TotalLines = lines.Length
+        };
     }
 }
