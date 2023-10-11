@@ -183,7 +183,7 @@ internal partial class App : Form
         return new FileImportResult
         {
             Additions = additions,
-            TotalLines = fileName.Length
+            TotalLines = lines.Length
         };
     }
 }
