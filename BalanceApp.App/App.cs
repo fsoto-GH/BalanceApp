@@ -147,7 +147,6 @@ internal partial class App : Form
                 additions += res.Additions;
                 totalLinesRead += res.TotalLines;
             }
-            UpdateSummary();
 
             if (additions > 0)
             {
@@ -155,15 +154,21 @@ internal partial class App : Form
             }
             else
             {
-                MessageBox.Show("No additions made. Check if the file was empty or malformed.\nEach line should follow: \"[Balance|Payment|Cashback],Name,Amount\"");
+                MessageBox.Show("No additions made. Check if the file was empty or malformed." +
+                                "\nEach line should follow: \"Category,Name,Amount\"" +
+                                $"\n- Category: one of '{string.Join(",", tracker.Categories)}'" +
+                                $"\n- Name: description of the record" +
+                                $"\n- Amount: of the record in $#.##");
             }
+
+            UpdateSummary();
         }
     }
 
     private FileImportResult loadFromFile(string fileName)
     {
         int additions = 0;
-        string[] lines = File.ReadAllLines(fileName);
+        string[] lines = File.ReadAllLines(fileName).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 
         foreach (string line in lines)
         {
@@ -178,13 +183,15 @@ internal partial class App : Form
             string cat = comps[0];
             string name = comps[1];
 
-            if (!(double.TryParse(comps[2], out double amount) && tracker.Categories.Contains(cat)))
+            if (double.TryParse(comps[2], out double amount) && tracker.Categories.Contains(cat))
+            {
+                tracker.Add(new(name, amount, cat));
+                additions++;
+            }
+            else
             {
                 Debug.WriteLine($"Unable to parse: '{line}'");
             }
-
-            tracker.Add(new(name, amount, cat));
-            additions++;
         }
         return new FileImportResult
         {
