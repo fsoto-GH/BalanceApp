@@ -21,5 +21,4 @@ To get started with BalanceApp, follow these steps:
 
 # Screenshots
 
-![alt text](screenshots/app_view_items.png)
-![alt text](screenshots/app_view_empty.png)
+![A screenshot of my balance application with items.](screenshots/app_view_items.png)
