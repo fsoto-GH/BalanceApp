@@ -17,5 +17,9 @@ To get started with BalanceApp, follow these steps:
 2. Open the solution file in Visual Studio.
 3. Build the project to restore dependencies.
 4. Run the application using Visual Studio or publish it as an executable.
+5. (Optional) You can publish the application with a ClickOnce configuration so that you can easily launch it.
 
 # Screenshots
+
+![alt text](screenshots/app_view_items.png)
+![alt text](screenshots/app_view_empty.png)
