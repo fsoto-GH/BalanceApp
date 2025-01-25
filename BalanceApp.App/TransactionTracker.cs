@@ -40,6 +40,15 @@ public class TransactionTracker
         _transactions.Add(datedAmount);
     }
 
+    public void AddTransactions(IEnumerable<DatedAmount> transactions)
+    {
+        foreach(var t in transactions)
+        {
+            Add(t);
+        }
+    }
+
+
     public void ClearTransactions()
     {
         _transactions.Clear();
