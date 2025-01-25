@@ -40,13 +40,18 @@
             this.btnImport = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.btnPrintTxt = new System.Windows.Forms.Button();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tsSaveStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.gpOptions.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // gpOptions
             // 
+            this.gpOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gpOptions.Controls.Add(this.btnEdit);
             this.gpOptions.Controls.Add(this.btnClear);
             this.gpOptions.Controls.Add(this.btnAddCashback);
@@ -61,7 +66,6 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEdit.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnEdit.Enabled = false;
             this.btnEdit.Location = new System.Drawing.Point(186, 61);
@@ -74,7 +78,6 @@
             // 
             // btnClear
             // 
-            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnClear.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnClear.Enabled = false;
             this.btnClear.Location = new System.Drawing.Point(6, 61);
@@ -87,7 +90,6 @@
             // 
             // btnAddCashback
             // 
-            this.btnAddCashback.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddCashback.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnAddCashback.Location = new System.Drawing.Point(256, 19);
             this.btnAddCashback.Name = "btnAddCashback";
@@ -99,7 +101,6 @@
             // 
             // btnAddPayment
             // 
-            this.btnAddPayment.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnAddPayment.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnAddPayment.Location = new System.Drawing.Point(131, 19);
             this.btnAddPayment.Name = "btnAddPayment";
@@ -146,17 +147,19 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.statusStrip1);
             this.panel2.Controls.Add(this.btnImport);
             this.panel2.Controls.Add(this.btnExport);
             this.panel2.Controls.Add(this.btnPrintTxt);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 663);
+            this.panel2.Location = new System.Drawing.Point(0, 645);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(404, 48);
+            this.panel2.Size = new System.Drawing.Size(404, 66);
             this.panel2.TabIndex = 4;
             // 
             // btnImport
             // 
+            this.btnImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnImport.Location = new System.Drawing.Point(98, 12);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(81, 23);
@@ -167,6 +170,7 @@
             // 
             // btnExport
             // 
+            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnExport.Enabled = false;
             this.btnExport.Location = new System.Drawing.Point(11, 12);
             this.btnExport.Name = "btnExport";
@@ -178,6 +182,7 @@
             // 
             // btnPrintTxt
             // 
+            this.btnPrintTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPrintTxt.Enabled = false;
             this.btnPrintTxt.Location = new System.Drawing.Point(285, 12);
             this.btnPrintTxt.Name = "btnPrintTxt";
@@ -186,6 +191,21 @@
             this.btnPrintTxt.Text = "Save Text";
             this.btnPrintTxt.UseVisualStyleBackColor = true;
             this.btnPrintTxt.Click += new System.EventHandler(this.btnPrintTxt_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsSaveStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 42);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(402, 22);
+            this.statusStrip1.TabIndex = 5;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tsSaveStatus
+            // 
+            this.tsSaveStatus.Name = "tsSaveStatus";
+            this.tsSaveStatus.Size = new System.Drawing.Size(0, 17);
             // 
             // App
             // 
@@ -199,9 +219,13 @@
             this.MinimumSize = new System.Drawing.Size(420, 750);
             this.Name = "App";
             this.Text = "Balance App";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.App_FormClosing);
             this.gpOptions.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -221,6 +245,8 @@
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel tsSaveStatus;
     }
 }
 

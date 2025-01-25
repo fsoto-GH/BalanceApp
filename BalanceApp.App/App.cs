@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Deployment.Application;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace BalanceApp.App;
 
@@ -13,13 +14,13 @@ namespace BalanceApp.App;
 internal partial class App : Form
 {
     private readonly TransactionTracker tracker;
-
+    private bool _hasUnsavedChanges;
 
     public App()
     {
         InitializeComponent();
         tracker = new();
-
+        _hasUnsavedChanges = false;
         if (ApplicationDeployment.IsNetworkDeployed)
         {
             Text = $"Balance App [v. {ApplicationDeployment.CurrentDeployment.CurrentVersion}]";
@@ -32,14 +33,33 @@ internal partial class App : Form
         DialogResult result = addBalance.ShowDialog();
         if (result == DialogResult.OK)
         {
+            _hasUnsavedChanges = true;
             DatedAmount namedAmount = addBalance.NamedAmount;
             tracker.Add(namedAmount);
             UpdateSummary();
         }
     }
 
+    private void UpdateLastSavedStatus()
+    {
+        string prefix = "Last Saved: ";
+        string dirtySuffix = "*";
+        string formattedDateTime = $"{DateTime.Now:MM/dd/yyyy @ hh:mm:ss tt}";
+        string curr_status = tsSaveStatus.Text;
+
+        // We have saved and is marked dirty state but with no more unsaved changes.
+        if (curr_status.StartsWith(prefix) && curr_status.EndsWith(dirtySuffix) && !_hasUnsavedChanges)
+        {
+            tsSaveStatus.Text = $"{prefix}{formattedDateTime}";
+        } else if (curr_status.StartsWith(prefix) && !curr_status.EndsWith(dirtySuffix) && _hasUnsavedChanges)
+        {
+            tsSaveStatus.Text = $"{curr_status}*";
+        }
+    }
+
     private void UpdateSummary()
     {
+        UpdateLastSavedStatus();
         txtSummary.Text = TransactionPrinter.Summary(tracker);
         btnClear.Enabled = tracker.HasTransactions;
         btnEdit.Enabled = tracker.HasTransactions;
@@ -74,6 +94,7 @@ internal partial class App : Form
         if (result == DialogResult.Yes)
         {
             tracker.ClearTransactions();
+            _hasUnsavedChanges = false;
             UpdateSummary();
         }
     }
@@ -81,8 +102,11 @@ internal partial class App : Form
     private void btnEdit_Click(object sender, EventArgs e)
     {
         EditMenu edit = new(tracker);
-        edit.ShowDialog();
-        UpdateSummary();
+        if (edit.ShowDialog() == DialogResult.OK)
+        {
+            _hasUnsavedChanges = true;
+            UpdateSummary();
+        }
     }
 
     private void btnPrintTxt_Click(object sender, EventArgs e)
@@ -101,6 +125,20 @@ internal partial class App : Form
 
     private void btnExport_Click(object sender, EventArgs e)
     {
+        bool isSaved = ExportToFile();
+        if (isSaved)
+        {
+            _hasUnsavedChanges = false;
+            UpdateSummary();
+        }
+    }
+
+    /// <summary>
+    /// Reponsible for opening a FileSave modal and saving the transactions to a file.
+    /// </summary>
+    /// <returns>true if save was made else false</returns>
+    private bool ExportToFile()
+    {
         SaveFileDialog save = new()
         {
             DefaultExt = ".txt",
@@ -110,7 +148,14 @@ internal partial class App : Form
         if (save.ShowDialog() == DialogResult.OK)
         {
             TransactionPrinter.ExportToFile(tracker, save.FileName);
+
+            string prefix = "Last Saved: ";
+            string formattedDateTime = $"{DateTime.Now:MM/dd/yyyy @ hh:mm:ss tt}";
+            tsSaveStatus.Text = $"{prefix}{formattedDateTime}";
+            return true;
         }
+
+        return false;
     }
 
     private void btnImport_Click(object sender, EventArgs e)
@@ -134,20 +179,27 @@ internal partial class App : Form
 
         int additions = 0;
         int totalLinesRead = 0;
+        List<DatedAmount> allReadTransactions = new();
         if (open.ShowDialog() == DialogResult.OK)
         {
-            if (doDelete)
-            {
-                tracker.ClearTransactions();
-            }
-
             foreach (string fileName in open.FileNames)
             {
-                var res = loadFromFile(fileName);
+                var res = LoadFromFile(fileName);
+                allReadTransactions.AddRange(res.ReadTransactions);
                 additions += res.Additions;
                 totalLinesRead += res.TotalLines;
             }
-            UpdateSummary();
+
+            if (doDelete)
+            {
+                tracker.ClearTransactions();
+                // we only have file-loaded transactions
+                _hasUnsavedChanges = true;
+            } else
+            {
+                _hasUnsavedChanges = _hasUnsavedChanges && tracker.HasTransactions;
+            }
+            tracker.AddTransactions(allReadTransactions);
 
             if (additions > 0)
             {
@@ -155,15 +207,22 @@ internal partial class App : Form
             }
             else
             {
-                MessageBox.Show("No additions made. Check if the file was empty or malformed.\nEach line should follow: \"[Balance|Payment|Cashback],Name,Amount\"");
+                MessageBox.Show("No additions made. Check if the file was empty or malformed." +
+                                "\nEach line should follow: \"Category,Name,Amount\"" +
+                                $"\n- Category: one of '{string.Join(",", tracker.Categories)}'" +
+                                $"\n- Name: description of the record" +
+                                $"\n- Amount: of the record in $#.##");
             }
+
+            UpdateSummary();
         }
     }
 
-    private FileImportResult loadFromFile(string fileName)
+    private FileImportResult LoadFromFile(string fileName)
     {
         int additions = 0;
-        string[] lines = File.ReadAllLines(fileName);
+        string[] lines = File.ReadAllLines(fileName).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+        List<DatedAmount> readTransactions = new();
 
         foreach (string line in lines)
         {
@@ -178,18 +237,37 @@ internal partial class App : Form
             string cat = comps[0];
             string name = comps[1];
 
-            if (!(double.TryParse(comps[2], out double amount) && tracker.Categories.Contains(cat)))
+            if (double.TryParse(comps[2], out double amount) && tracker.Categories.Contains(cat))
+            {
+                readTransactions.Add(new(name, amount, cat));
+                additions++;
+            }
+            else
             {
                 Debug.WriteLine($"Unable to parse: '{line}'");
             }
-
-            tracker.Add(new(name, amount, cat));
-            additions++;
         }
         return new FileImportResult
         {
             Additions = additions,
-            TotalLines = lines.Length
+            TotalLines = lines.Length,
+            ReadTransactions = readTransactions
         };
+    }
+
+    private void App_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        if (tracker.HasTransactions && _hasUnsavedChanges)
+        {
+            if (MessageBox.Show("You have unsaved transactions, are you sure you want to close?", "Unsaved Transactions", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) ==  DialogResult.No)
+            {
+                // The user did not fully save the transactions, so we cancel to reprompt.
+                if (!ExportToFile())
+                {
+                    e.Cancel = true;
+                }
+            } 
+        }
+
     }
 }
